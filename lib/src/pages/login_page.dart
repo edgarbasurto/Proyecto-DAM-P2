@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:proyecto_dam_p2/src/bloc/provider.dart';
 
 class LoginPage extends StatelessWidget {
@@ -39,22 +42,20 @@ class LoginPage extends StatelessWidget {
                       offset: Offset(0.0, 5.0),
                       spreadRadius: 3.0)
                 ]),
-            child: Column(
-              children: <Widget>[
-                Text('Ingreso', style: TextStyle(fontSize: 20.0)),
-                SizedBox(height: 60.0),
-                _crearEmail(bloc),
-                SizedBox(height: 30.0),
-                _crearPassword(bloc),
-                SizedBox(height: 30.0),
-                _crearBoton(bloc)
-              ],
-            ),
+            child: Column(children: <Widget>[
+              Text('Ingreso', style: TextStyle(fontSize: 20.0)),
+              SizedBox(height: 45.0),
+              _crearEmail(bloc),
+              SizedBox(height: 30.0),
+              _crearPassword(bloc),
+              SizedBox(height: 30.0),
+              _IngresarBoton(bloc),
+            ]),
           ),
-          Text('¿Olvidó su contraseña?'),
-          SizedBox(
-            height: 100.0,
-          )
+          Text('¿Olvidó su Contraseña?'),
+          SizedBox(height: 40.0),
+          _SalirBoton(bloc),
+          SizedBox(height: 100.0),
         ],
       ),
     );
@@ -69,7 +70,7 @@ class LoginPage extends StatelessWidget {
             child: TextField(
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
-                icon: Icon(Icons.alternate_email, color: Colors.deepPurple),
+                icon: Icon(Icons.alternate_email, color: Colors.lightBlue),
                 hintText: 'ejemplo@correo.com',
                 labelText: 'Correo electrónico',
                 counterText: snapshot.data,
@@ -90,7 +91,7 @@ class LoginPage extends StatelessWidget {
           child: TextField(
             obscureText: true,
             decoration: InputDecoration(
-              icon: Icon(Icons.lock_outline, color: Colors.deepPurple),
+              icon: Icon(Icons.lock_outline, color: Colors.lightBlue),
               labelText: 'Contraseña',
               counterText: snapshot.data,
               //errorText: snapshot.error.toString()
@@ -102,27 +103,50 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _crearBoton(LoginBloc bloc) {
+  Widget _IngresarBoton(LoginBloc bloc) {
     return StreamBuilder(
       stream: bloc.formValidStream,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        return MaterialButton(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-            child: Text('Ingresar'),
+        return ElevatedButton(
+          child: Text("Ingresar".toUpperCase(), style: TextStyle(fontSize: 14)),
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.lightBlue,
           ),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-          elevation: 0.0,
-          color: Colors.deepPurple,
-          textColor: Colors.white,
+          // shape:
+          //     RoundedRectangleBorder( borderRadius: BorderRadius.circular(5.0)),
+
+          // color: Colors.lightBlue,
+          // textColor: Colors.black,
           onPressed: snapshot.hasData ? () => _login(bloc, context) : null,
         );
       },
     );
   }
 
+  Widget _SalirBoton(LoginBloc bloc) {
+    return StreamBuilder(
+      stream: bloc.salirValidStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return ElevatedButton(
+          child: Text("Salir".toUpperCase(), style: TextStyle(fontSize: 14)),
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.lightBlue,
+          ),
+          // shape:
+          //     RoundedRectangleBorder( borderRadius: BorderRadius.circular(5.0)),
+
+          // color: Colors.lightBlue,
+          // textColor: Colors.black,
+          onPressed: snapshot.hasData ? () => _salir(bloc, context) : null,
+        );
+      },
+    );
+  }
+
   _login(LoginBloc bloc, BuildContext context) {
+    print(DateTime.now());
     print('============================');
     print('Email: ${bloc.email}');
     print('Password: ${bloc.password}');
@@ -130,16 +154,26 @@ class LoginPage extends StatelessWidget {
     Navigator.pushReplacementNamed(context, 'home');
   }
 
+  _salir(LoginBloc bloc, BuildContext context) {
+    print(DateTime.now());
+    print('============================');
+    print('Ud. ha salido del sistema:');
+    print('============================');
+    if (Platform.isAndroid) {
+      SystemNavigator.pop();
+    } else if (Platform.isIOS) {
+      exit(0);
+    }
+  }
+
   Widget _crearFondo(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final fondoMorado = Container(
+    final fondoAzul = Container(
       height: size.height * 0.4,
       width: double.infinity,
       decoration: BoxDecoration(
-          gradient: LinearGradient(colors: <Color>[
-        Color.fromRGBO(63, 63, 156, 1.0),
-        Color.fromRGBO(90, 70, 178, 1.0)
-      ])),
+          gradient: LinearGradient(
+              colors: <Color>[Colors.lightBlue.shade300, Colors.lightBlue])),
     );
 
     final circulo = Container(
@@ -152,7 +186,7 @@ class LoginPage extends StatelessWidget {
 
     return Stack(
       children: <Widget>[
-        fondoMorado,
+        fondoAzul,
         Positioned(top: 90.0, left: 30.0, child: circulo),
         Positioned(top: -40.0, left: -30.0, child: circulo),
         Positioned(bottom: -50.0, right: -10.0, child: circulo),

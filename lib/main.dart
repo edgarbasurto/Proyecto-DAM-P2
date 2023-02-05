@@ -13,13 +13,13 @@ class MyApp extends StatelessWidget {
     return Provider(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Material App',
+        title: 'MentalGames',
         initialRoute: 'login',
         routes: {
           'login': (BuildContext context) => LoginPage(),
           'home': (BuildContext context) => HomePage(),
         },
-        theme: ThemeData(primaryColor: Colors.deepPurple),
+        theme: ThemeData(primaryColor: Colors.lightBlue),
       ),
     );
   }
