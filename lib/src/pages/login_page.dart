@@ -196,7 +196,8 @@ class LoginPage extends StatelessWidget {
           padding: EdgeInsets.only(top: 80.0),
           child: Column(
             children: <Widget>[
-              Icon(Icons.gamepad_outlined, color: Colors.white, size: 100.0),
+              Image.asset('assets/img/mentalgame_icono.png',
+                  color: Colors.white, width: 100.0),
               SizedBox(height: 10.0, width: double.infinity),
               Text(
                 'Mental Games',
