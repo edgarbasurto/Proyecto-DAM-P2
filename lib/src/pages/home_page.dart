@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:proyecto_dam_p2/src/bloc/provider.dart';
@@ -21,30 +22,25 @@ class HomePage extends StatelessWidget {
           Divider(),
           Text('Password: ${bloc.password}'),
           Spacer(),
-          _SalirBoton(bloc),
+          _SalirBoton(bloc, context),
           Spacer()
         ],
       ),
     );
   }
 
-  Widget _SalirBoton(LoginBloc bloc) {
-    return StreamBuilder(
-      stream: bloc.salirValidStream,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        return ElevatedButton(
-          child: Text("Salir".toUpperCase(), style: TextStyle(fontSize: 14)),
-          style: ElevatedButton.styleFrom(
-            foregroundColor: Colors.white,
-            backgroundColor: Colors.lightBlue,
-          ),
-          // shape:
-          //     RoundedRectangleBorder( borderRadius: BorderRadius.circular(5.0)),
-
-          // color: Colors.lightBlue,
-          // textColor: Colors.black,
-          onPressed: snapshot.hasData ? () => _salir(bloc, context) : null,
-        );
+  Widget _SalirBoton(LoginBloc bloc, BuildContext context) {
+    return ElevatedButton(
+      child:
+          Text("Cerrar sesión".toUpperCase(), style: TextStyle(fontSize: 14)),
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.lightBlue,
+      ),
+      onPressed: () async {
+        await FirebaseAuth.instance.signOut();
+        Navigator.pushNamedAndRemoveUntil(
+            context, 'login', (Route<dynamic> route) => false);
       },
     );
   }

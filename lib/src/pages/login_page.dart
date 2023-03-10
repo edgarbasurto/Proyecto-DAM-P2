@@ -1,11 +1,15 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:proyecto_dam_p2/src/bloc/provider.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,6 +19,61 @@ class LoginPage extends StatelessWidget {
         _loginForm(context),
       ],
     ));
+  }
+
+  Future<void> _registerWithEmailAndPassword(
+      String email, String password, BuildContext context) async {
+    try {
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Se ha registrado correctamente en Mental Games'),
+        ),
+      );
+      Navigator.pushReplacementNamed(context, 'home');
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error de registro: $e'),
+        ),
+      );
+    }
+  }
+
+  Future<void> _signInWithEmailAndPassword(
+      String email, String password, BuildContext context) async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      // Si la autenticación es exitosa, navegamos al Home
+      Navigator.pushReplacementNamed(context, 'home');
+    } catch (e) {
+      // Si hay un error, lo mostramos en la consola
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error de autenticación: $e'),
+        ),
+      );
+    }
+  }
+
+  Future<void> _resetPassword(String email, BuildContext context) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+              'Se ha enviado un correo electrónico para restablecer su contraseña.'),
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+              'Error al enviar correo electrónico de restablecimiento de contraseña: $e'),
+        ),
+      );
+    }
   }
 
   Widget _loginForm(BuildContext context) {
@@ -43,17 +102,22 @@ class LoginPage extends StatelessWidget {
                       spreadRadius: 3.0)
                 ]),
             child: Column(children: <Widget>[
-              Text('Ingreso', style: TextStyle(fontSize: 20.0)),
+              Text('Iniciar Sesión',
+                  style: TextStyle(fontSize: 20.0, color: Colors.black54)),
               SizedBox(height: 45.0),
               _crearEmail(bloc),
               SizedBox(height: 30.0),
               _crearPassword(bloc),
               SizedBox(height: 30.0),
               _IngresarBoton(bloc),
+              SizedBox(height: 10.0),
+              _RegistrarseBoton(bloc, context),
+              SizedBox(height: 10.0),
+              _RestablecerContrasenaBoton(bloc, context),
             ]),
           ),
-          Text('¿Olvidó su Contraseña?'),
-          SizedBox(height: 40.0),
+          //Text('¿Olvidó su Contraseña?'),
+          SizedBox(height: 30.0),
           _SalirBoton(bloc),
           SizedBox(height: 100.0),
         ],
@@ -103,6 +167,29 @@ class LoginPage extends StatelessWidget {
     );
   }
 
+  Widget _RegistrarseBoton(LoginBloc bloc, BuildContext context) {
+    return StreamBuilder(
+      stream: bloc.formValidStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return ElevatedButton(
+          child:
+              Text("Registrarse".toUpperCase(), style: TextStyle(fontSize: 14)),
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.lightBlue,
+          ),
+          onPressed: snapshot.hasData
+              ? () async {
+                  // Si el formulario es válido, llamamos al método de registro
+                  await _registerWithEmailAndPassword(
+                      bloc.email, bloc.password, context);
+                }
+              : null,
+        );
+      },
+    );
+  }
+
   Widget _IngresarBoton(LoginBloc bloc) {
     return StreamBuilder(
       stream: bloc.formValidStream,
@@ -113,12 +200,57 @@ class LoginPage extends StatelessWidget {
             foregroundColor: Colors.white,
             backgroundColor: Colors.lightBlue,
           ),
-          // shape:
-          //     RoundedRectangleBorder( borderRadius: BorderRadius.circular(5.0)),
+          onPressed: snapshot.hasData
+              ? () async {
+                  // Si el formulario es válido, llamamos al método de autenticación
+                  await _signInWithEmailAndPassword(
+                      bloc.email, bloc.password, context);
+                }
+              : null,
+        );
+      },
+    );
+  }
 
-          // color: Colors.lightBlue,
-          // textColor: Colors.black,
-          onPressed: snapshot.hasData ? () => _login(bloc, context) : null,
+  Widget _RestablecerContrasenaBoton(LoginBloc bloc, BuildContext context) {
+    return ElevatedButton(
+      child: Text(
+        'Restablecer Contraseña',
+        style: TextStyle(fontSize: 14),
+      ),
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.grey[500],
+      ),
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            final emailController = TextEditingController();
+            return AlertDialog(
+              title: Text('Restablecer Contraseña'),
+              content: TextField(
+                controller: emailController,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  hintText: 'Ingrese su correo electrónico',
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('Cancelar'),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+                TextButton(
+                  child: Text('Enviar'),
+                  onPressed: () async {
+                    await _resetPassword(emailController.text, context);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
         );
       },
     );
