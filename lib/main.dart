@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:proyecto_dam_p2/src/percepcion/percepcion_page.dart';
 // Importamos la configuarcion creada por FlutterFire
 import 'firebase_options.dart';
 
