@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:proyecto_dam_p2/src/pages/acerca_de_page.dart';
+import 'package:proyecto_dam_p2/src/pages/aprendizaje_page.dart';
+import 'package:proyecto_dam_p2/src/pages/atencion_page.dart';
+import 'package:proyecto_dam_p2/src/pages/pensamiento_page.dart';
+import 'package:proyecto_dam_p2/src/pages/percepcion_page.dart';
 // Importamos la configuarcion creada por FlutterFire
 import 'firebase_options.dart';
 
@@ -28,6 +33,11 @@ class MyApp extends StatelessWidget {
         routes: {
           'login': (BuildContext context) => LoginPage(),
           'home': (BuildContext context) => HomePage(),
+          'acerca_de': (BuildContext context) => AcercaDePage(),
+          'aprendizaje': (BuildContext context) => AprendizajePage(),
+          'atencion': (BuildContext context) => AtencionPage(),
+          'pensamiento': (BuildContext context) => PensamientoPage(),
+          'percepcion': (BuildContext context) => PercepcionPage(),
         },
         theme: ThemeData(primaryColor: Colors.lightBlue),
       ),

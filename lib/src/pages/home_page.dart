@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:proyecto_dam_p2/src/bloc/provider.dart';
+import 'package:proyecto_dam_p2/src/pages/acerca_de_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -12,18 +13,120 @@ class HomePage extends StatelessWidget {
     final bloc = Provider.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text('Mental Games')),
+      appBar: AppBar(
+        title: const Text('Bienvenido a Mental Games'),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip:
+                'Ir a la página de información sobre los desarrolladores de la aplicación',
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, 'acerca_de');
+            },
+          ),
+        ],
+      ),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Spacer(),
           Text('Email: ${bloc.email}'),
-          Divider(),
-          Text('Password: ${bloc.password}'),
+          SizedBox(height: 30.0),
+          //Divider(),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, 'aprendizaje');
+                  },
+                  child: Card(
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          'assets/img/ic_aprendizaje.png',
+                          height: 120,
+                          width: 120,
+                        ),
+                        Text(
+                          'Aprendizaje.',
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, 'atencion');
+                  },
+                  child: Card(
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          'assets/img/ic_atencion.png',
+                          height: 120,
+                          width: 120,
+                        ),
+                        Text(
+                          'Atención.',
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, 'percepcion');
+                  },
+                  child: Card(
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          'assets/img/ic_percepcion.png',
+                          height: 120,
+                          width: 120,
+                        ),
+                        Text(
+                          'Percepción.',
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, 'pensamiento');
+                  },
+                  child: Card(
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          'assets/img/ic_pensamiento.png',
+                          height: 120,
+                          width: 120,
+                        ),
+                        Text(
+                          'Pensamiento.',
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
           Spacer(),
           _SalirBoton(bloc, context),
-          Spacer()
         ],
       ),
     );
