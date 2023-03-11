@@ -89,7 +89,7 @@ class LoginPage extends StatelessWidget {
           ),
           Container(
             width: size.width * 0.85,
-            margin: EdgeInsets.symmetric(vertical: 30.0),
+            margin: EdgeInsets.only(top: 30, bottom: 5),
             padding: EdgeInsets.symmetric(vertical: 50.0),
             decoration: BoxDecoration(
                 color: Colors.white,
@@ -117,7 +117,7 @@ class LoginPage extends StatelessWidget {
             ]),
           ),
           //Text('¿Olvidó su Contraseña?'),
-          SizedBox(height: 30.0),
+          // SizedBox(height: 30.0),
           _SalirBoton(bloc),
           SizedBox(height: 100.0),
         ],
@@ -308,22 +308,9 @@ class LoginPage extends StatelessWidget {
               colors: <Color>[Colors.lightBlue.shade300, Colors.lightBlue])),
     );
 
-    final circulo = Container(
-      width: 100.0,
-      height: 100.0,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(100.0),
-          color: Color.fromRGBO(255, 255, 255, 0.05)),
-    );
-
     return Stack(
       children: <Widget>[
         fondoAzul,
-        Positioned(top: 90.0, left: 30.0, child: circulo),
-        Positioned(top: -40.0, left: -30.0, child: circulo),
-        Positioned(bottom: -50.0, right: -10.0, child: circulo),
-        Positioned(bottom: 120.0, right: 20.0, child: circulo),
-        Positioned(bottom: -50.0, left: -20.0, child: circulo),
         Container(
           padding: EdgeInsets.only(top: 50.0),
           child: Column(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_dam_p2/src/pages/helpers_widget.dart';
 
 class AcercaDePage extends StatelessWidget {
   const AcercaDePage({super.key});
@@ -6,15 +7,7 @@ class AcercaDePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pushReplacementNamed(context, 'home');
-          },
-        ),
-        title: const Text('Acerca de ¨Mental Games¨'),
-      ),
+      appBar: AppBarra(context, 'Acerca de ¨Mental Games¨', true),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

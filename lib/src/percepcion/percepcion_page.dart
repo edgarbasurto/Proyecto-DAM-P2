@@ -11,17 +11,17 @@ class PercepcionPage extends StatelessWidget {
     // final bloc = Provider.of(context);
 
     return Scaffold(
-        appBar: AppBar(title: TituloApp("")),
-        body: Documento() //documento principal del diseño
+        appBar: AppBarra(context, "", true),
+        body: Documento(context) //documento principal del diseño
         );
   }
 
-  Column Documento() {
+  Column Documento(BuildContext context) {
     return new Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       mainAxisSize: MainAxisSize.max,
-      children: <Widget>[Cuerpo(), Chronometer(), Score(), btnSalir()],
+      children: <Widget>[Cuerpo(), Chronometer(), Score(), SalirBoton(context)],
     );
   }
 
@@ -143,17 +143,5 @@ class PercepcionPage extends StatelessWidget {
         )
       ],
     );
-  }
-
-  ElevatedButton btnSalir() {
-    return ElevatedButton(
-        child:
-            Text("Salir".toUpperCase(), style: const TextStyle(fontSize: 18)),
-        style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white,
-          backgroundColor: Colors.lightBlue,
-        ),
-        onPressed: null //snapshot.hasData ? () => _salir(bloc, context) : null,
-        );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_dam_p2/src/pages/helpers_widget.dart';
 
 class AprendizajePage extends StatelessWidget {
   const AprendizajePage({super.key});
@@ -6,19 +7,15 @@ class AprendizajePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Aprendizaje'),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pushReplacementNamed(context, 'home'),
-        ),
-      ),
+      appBar: AppBarra(context, "", true),
       body: Center(
-        child: Text(
+          child: Column(children: <Widget>[
+        Text(
           'Contenido',
           style: TextStyle(fontSize: 24),
         ),
-      ),
+        SalirBoton(context)
+      ])),
     );
   }
 }
