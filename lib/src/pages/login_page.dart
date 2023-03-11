@@ -157,7 +157,7 @@ class LoginPage extends StatelessWidget {
             decoration: InputDecoration(
               icon: Icon(Icons.lock_outline, color: Colors.lightBlue),
               labelText: 'Contraseña',
-              counterText: snapshot.data?.length.toString(),
+              counterText: "",
               //errorText: snapshot.error.toString()
             ),
             onChanged: bloc.changePassword,
@@ -325,7 +325,7 @@ class LoginPage extends StatelessWidget {
         Positioned(bottom: 120.0, right: 20.0, child: circulo),
         Positioned(bottom: -50.0, left: -20.0, child: circulo),
         Container(
-          padding: EdgeInsets.only(top: 80.0),
+          padding: EdgeInsets.only(top: 50.0),
           child: Column(
             children: <Widget>[
               Image.asset('assets/img/mentalgame_icono.png',
