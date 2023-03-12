@@ -26,6 +26,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/
     - assets/img/ic_atencion.png
     - assets/img/ic_m01.png
     - assets/img/ic_m02.png
