@@ -1,4 +1,5 @@
 import 'package:proyecto_dam_p2/src/models/TileModel.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 String selectedTile = "";
 int selectedIndex = -1;
@@ -21,7 +22,6 @@ List<bool> getClicked() {
 
 List<TileModel> getPairs() {
   List<TileModel> pairs = <TileModel>[];
-
   TileModel tileModel = TileModel();
 
   //1
@@ -143,4 +143,19 @@ List<TileModel> getQuestionPairs() {
   tileModel = TileModel();
 
   return pairs;
+}
+
+class AprendizajeService {
+  Future<bool> saveProgreso(String titulo, String contenido) async {
+    try {
+      await FirebaseDatabase.instance
+          .ref()
+          .child('aprendizaje_score')
+          .push()
+          .set({'title': titulo, 'body': contenido});
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

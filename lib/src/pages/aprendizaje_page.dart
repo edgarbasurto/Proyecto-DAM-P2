@@ -36,9 +36,18 @@ class _MemoramaState extends State<Memorama> {
     // TODO: implement initState
     super.initState();
     reStart();
-    if (!started) {
-      start();
-    }
+  }
+
+  @override
+  void deactivate() {
+    timer!.cancel();
+    super.deactivate();
+  }
+
+  @override
+  void dispose() {
+    timer!.cancel();
+    super.dispose();
   }
 
   void stop() {
@@ -112,6 +121,12 @@ class _MemoramaState extends State<Memorama> {
         selected = false;
       });
     });
+    if (!started) {
+      start();
+    } else {
+      reset();
+      start();
+    }
   }
 
   @override
@@ -201,27 +216,7 @@ class _MemoramaState extends State<Memorama> {
                         const SizedBox(
                           height: 20,
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            // TODO
-                          },
-                          child: Container(
-                            height: 50,
-                            width: 200,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.blue, width: 2),
-                              borderRadius: BorderRadius.circular(24),
-                            ),
-                            child: const Text(
-                              "Rate Us",
-                              style: TextStyle(
-                                  color: Colors.blue,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        ),
+                        SalirBoton(context)
                       ],
                     ))
             ],
@@ -250,7 +245,7 @@ class _TileState extends State<Tile> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         if (!selected) {
           setState(() {
             myPairs[widget.tileIndex].setIsSelected(true);
@@ -258,17 +253,17 @@ class _TileState extends State<Tile> {
           if (selectedTile != "") {
             /// testing if the selected tiles are same
             if (selectedTile == myPairs[widget.tileIndex].getImageAssetPath()) {
-              print("add point");
+              //print("add point");
               points = points + 100;
-              print(selectedTile + " thishis" + widget.imagePathUrl);
+              //print(selectedTile + " thishis " + widget.imagePathUrl);
 
               TileModel tileModel = TileModel();
-              print(widget.tileIndex);
+              //print(widget.tileIndex);
               selected = true;
               Future.delayed(const Duration(seconds: 2), () {
                 tileModel.setImageAssetPath("");
                 myPairs[widget.tileIndex] = tileModel;
-                print(selectedIndex);
+                //print(selectedIndex);
                 myPairs[selectedIndex] = tileModel;
                 this.widget.parent.setState(() {});
                 setState(() {
@@ -277,12 +272,12 @@ class _TileState extends State<Tile> {
                 selectedTile = "";
               });
             } else {
-              print(selectedTile +
-                  " thishis " +
-                  myPairs[widget.tileIndex].getImageAssetPath());
-              print("wrong choice");
-              print(widget.tileIndex);
-              print(selectedIndex);
+              //print(selectedTile +
+              //    "thishis " +
+              //    myPairs[widget.tileIndex].getImageAssetPath());
+              // print("wrong choice");
+              // print(widget.tileIndex);
+              //  print(selectedIndex);
               selected = true;
               Future.delayed(const Duration(seconds: 2), () {
                 this.widget.parent.setState(() {
@@ -302,8 +297,8 @@ class _TileState extends State<Tile> {
               selectedIndex = widget.tileIndex;
             });
 
-            print(selectedTile);
-            print(selectedIndex);
+            //  print(selectedTile);
+            //  print(selectedIndex);
           }
         }
       },
