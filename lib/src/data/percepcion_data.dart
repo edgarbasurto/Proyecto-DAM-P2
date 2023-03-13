@@ -45,9 +45,9 @@ String getImagen(String imgNombre) {
     case "M22":
       return "assets/img/ic_m22.png";
     case "M23":
-      return "assets/img/ic_m23.png.png";
+      return "assets/img/ic_m23.png";
     case "M24":
-      return "assets/img/ic_m24.png.png";
+      return "assets/img/ic_m24.png";
     case "M25":
       return "assets/img/ic_m25.png";
     case "M26":

@@ -65,7 +65,7 @@ class HomePage extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
               Text(
-                '10 items',
+                'Edgar Basurto Cruz',
                 style: TextStyle(color: Colors.black87, fontSize: 18),
               ),
               // trailing: CircleAvatar(),],
