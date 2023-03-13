@@ -1,11 +1,12 @@
+import 'dart:ffi';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-Widget TituloApp(modulo) {
-  const Titulo = "Mental Games";
-  return new Row(
+Widget tituloApp(modulo) {
+  const titulo = "Mental Games";
+  return Row(
     crossAxisAlignment: CrossAxisAlignment.center,
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
@@ -16,9 +17,9 @@ Widget TituloApp(modulo) {
         width: 40,
       ),
       Container(
-        margin: new EdgeInsets.only(left: 5),
+        margin: const EdgeInsets.only(left: 5),
         child: Text(
-          modulo == "" ? Titulo : modulo,
+          modulo == "" ? titulo : modulo,
         ),
       )
     ],
@@ -26,15 +27,15 @@ Widget TituloApp(modulo) {
 }
 
 Widget BackHomeButtom(BuildContext context) {
-  return new IconButton(
-      icon: Icon(Icons.arrow_back),
+  return IconButton(
+      icon: const Icon(Icons.arrow_back),
       onPressed: () {
         Navigator.pushReplacementNamed(context, 'home');
       });
 }
 
 Widget AboutButtom(BuildContext context) {
-  return new IconButton(
+  return IconButton(
     icon: const Icon(Icons.info_outline),
     tooltip:
         'Ir a la página de información sobre los desarrolladores de la aplicación',
@@ -46,7 +47,7 @@ Widget AboutButtom(BuildContext context) {
 
 AppBar AppBarra(BuildContext context, String modulo, bool BackButtom) {
   return AppBar(
-    title: TituloApp(modulo),
+    title: tituloApp(modulo),
     backgroundColor: Colors.blueGrey[300],
     actions: BackButtom
         ? <Widget>[BackHomeButtom(context), AboutButtom(context)]
@@ -70,4 +71,22 @@ Widget SalirBoton(BuildContext context) {
               context, 'login', (Route<dynamic> route) => false);
         },
       ));
+}
+
+double doubleParse(String valor) {
+  return double.tryParse(valor) ?? 0;
+}
+
+double doubleParseint(int valor) {
+  return double.parse(valor.toString()) ?? 0;
+}
+
+void notificar(String msg) {
+  Fluttertoast.showToast(
+      msg: msg,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      textColor: Colors.white,
+      fontSize: 20);
 }

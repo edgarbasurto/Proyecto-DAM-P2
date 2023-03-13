@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:proyecto_dam_p2/src/bloc/provider.dart';
-import 'package:proyecto_dam_p2/src/pages/acerca_de_page.dart';
 
 import 'helpers_widget.dart';
 

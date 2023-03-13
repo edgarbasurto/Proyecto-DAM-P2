@@ -4,14 +4,13 @@ import 'package:proyecto_dam_p2/src/pages/acerca_de_page.dart';
 import 'package:proyecto_dam_p2/src/pages/aprendizaje_page.dart';
 import 'package:proyecto_dam_p2/src/pages/atencion_page.dart';
 import 'package:proyecto_dam_p2/src/pages/pensamiento_page.dart';
+import 'package:proyecto_dam_p2/src/pages/percepcion_page.dart';
 // Importamos la configuarcion creada por FlutterFire
 import 'firebase_options.dart';
 
 import 'package:proyecto_dam_p2/src/bloc/provider.dart';
 import 'package:proyecto_dam_p2/src/pages/home_page.dart';
 import 'package:proyecto_dam_p2/src/pages/login_page.dart';
-
-import 'src/percepcion/percepcion_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
