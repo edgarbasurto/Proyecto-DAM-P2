@@ -1,13 +1,9 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:flutter/material.dart';
-
 import 'package:proyecto_dam_p2/src/data/percepcion_data.dart';
 import 'package:proyecto_dam_p2/src/pages/helpers_widget.dart';
-
 import 'package:proyecto_dam_p2/src/models/precepcion_model.dart';
 
 class PercepcionPage extends StatelessWidget {
